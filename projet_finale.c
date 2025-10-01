@@ -1,8 +1,4 @@
-// historique des transactions mazal madertha 
-// koul jouj products dirhoum f category we7da
-// ordre alphabetique makhedamch
-// deatail d lcatalogue zid fiha description w stock
-// mli kandir depot makatzad 7ta 7aja
+// transaction mou7al ndirha
 // khass nkemel despenses par categorie w les produits les plus achetes
 #include <stdio.h>
 #include <string.h>
@@ -23,23 +19,18 @@ typedef struct {
     float prix;
     int stock;
 } produit;
-typedef struct {
-    int jour;
-    int mois;
-    int annee;
-} date;
 // arrays
 client customer[1];
 produit prod[MAX_SIZE] = {
-    {1,"casque","automotive","Casque audio haute qualité",799.00,5},
+    {1,"Casque","electronics","Casque audio haute qualité",799.00,5},
     {2,"Smartphone","electronics","Téléphone intelligent dernière génération",499.00,10},
     {3,"Parfum","beauty","Fragrance élégante et persistante",89.00,15},
-    {4,"Echarpe DOSEI","fashion","Écharpe légère style parisien",25.00,20},
+    {4,"Echarpe DOSEI","beauty","Écharpe légère style parisien",25.00,20},
     {5,"Cupcakes","food","Délicieux cupcakes faits maison",45.00,12},
     {6,"Yoga","sports","Mat confortable pour yoga",29.99,8},
     {7,"Lamp","home","Lumière douce pour ambiance",45.50,15},
     {8,"Novelt","books","Roman passionnant best-seller",13.99,25},
-    {9,"Board","toys","Jeu de société familial",49.95,12},
+    {9,"Board","sports","Jeu de société familial",49.95,12},
     {10,"Watering","garden","Arrosoir pratique jardin extérieur",19.75,30}
 };
 // Variables Globales
@@ -160,9 +151,9 @@ void gestion_profile() {
 void consult_solde() {
     printf("\n\n======= Consultation du Solde =======\n");
     printf("\n\n=======Solde Actuelle========\n");
-    printf("Client d'ID %d\n", customer[nbr_client].id_client);
+    printf("Client d'ID %d\n", customer[nbr_client-1].id_client);
     printf("Votre solde actuellle est :\n");
-    printf("===========> %.2f DH\n", customer[nbr_client].solde);
+    printf("===========> %.2f DH\n", customer[nbr_client-1].solde);
 }
 
 void depot_argent() {
@@ -170,7 +161,7 @@ void depot_argent() {
     printf("\n\n=======Depot d'argent ========\n");
     printf("Veuillez saisir le montant que vous voulez deposer :\n");
     scanf("%f", &montant_temp);
-    customer[nbr_client].solde += montant_temp;
+    customer[nbr_client-1].solde += montant_temp;
     printf("le depot a ete avec succes \n");
 }
 void historique_trans() {
@@ -211,9 +202,9 @@ void affichage_catalogue() {
         printf("Categorie : %s\n", prod[i].categorie);
         printf("le prix : %.2f\n", prod[i].prix);
         printf("la quantite en stock : %d\n\n", prod[i].stock);
+        printf
     }
 }
-
 int recherche_par_nom() {
     char nom_temp[MAX_SIZE];
     int trouve = 0;
@@ -340,21 +331,24 @@ for(int i=0;i<nbr_produits;i++)
     printf("%s  : %.2f\n",prod[i].nom_produit,prod[i].prix);
 }
 }
-void ordre_alphabetique()
-{
+void ordre_alphabetique() {
     produit temp;
+    produit temp_prod[MAX_SIZE];
+    for(int i = 0; i < nbr_produits; i++) {
+        temp_prod[i] = prod[i];
+    }
     for(int i = 0; i < nbr_produits - 1; i++) {
         for(int j = 0; j < nbr_produits - i - 1; j++) {
-            if(strcmp(prod[j].nom_produit, prod[j+1].nom_produit) > 0) {
-                temp = prod[j];
-                prod[j] = prod[j+1];
-                prod[j+1] = temp;
+            if(strcmp(temp_prod[j].nom_produit,temp_prod[j+1].nom_produit) > 0) {
+                temp = temp_prod[j];
+                temp_prod[j] = temp_prod[j+1];
+                temp_prod[j+1] = temp;
             }
         }
     }
-    for(int i=0;i<nbr_produits;i++)
-    {
-        printf("%s\n",prod[i].nom_produit);
+    printf("\n=== Produits par ordre alphabetique ===\n");
+    for(int i = 0; i < nbr_produits; i++) {
+        printf("%d. %s - %.2f DH\n", i+1, temp_prod[i].nom_produit, temp_prod[i].prix);
     }
 }
 void statistiques_prod()
@@ -515,10 +509,12 @@ void choisir_produit(){
             if (strcmp(prod[i].nom_produit, nom_temp) == 0)
             {
                 printf("\nProduit trouver\n\n");
-                printf("ID du produit : %d\n", prod[i].id_produit);
-                printf("nom du produit : %s\n", prod[i].nom_produit);
-                printf("category du produit  : %s\n", prod[i].categorie);
-                printf("Prix du produit : %.2f\n", prod[i].prix);
+                printf("ID du produit : %d\n",prod[i].id_produit);
+                printf("nom du produit : %s\n",prod[i].nom_produit);
+                printf("category du produit  : %s\n",prod[i].categorie);
+                printf("Prix du produit : %.2f\n",prod[i].prix);
+                printf("Stock du produit : %d\n",prod[i].stock);
+                printf("Description du produit : %s\n",prod[i].description);
                 trouve = 1;
                 break;
             }
@@ -596,6 +592,54 @@ void achat_effec()
         }
     } while (button_achat != 0);
 }
+void depenses_par_categorie() {
+    if (nbr_client == 0) return;
+    
+    printf("\n=== Depenses par Categorie ===\n");
+    int id_client = customer[nbr_client-1].id_client;
+    
+    for (int i = 0; i < nbr_produits; i++) {
+        float total = 0;
+        for (int j = 0; j < nbr_produits; j++) {
+            if (prod[j] == id_client && prod[j] == prod[i]) {
+                total += historique[j].montant;
+            }
+        }
+        if (total > 0) {
+            printf("%s: %.2f DH\n", prod[i].categorie, total);
+        }
+    }
+}
+void statistiques(){
+    int button_stats;
+    do
+    {
+        printf("\n======= Statistiques =======\n\n");
+        printf("1. Gestion du profil client\n");
+        printf("2. Gestion du solde virtuel\n");
+        printf("3. Autres statistiques\n");
+        printf("0. Quitter\n");
+        printf("\n\nVeuillez saisir un choix :");
+        scanf("%d",&button_stats);
+
+        switch (button_stats)
+        {
+        case 1:
+        
+        break;
+        case 2:
+        break;
+        case 3:
+        afficher_stat();
+        break;
+        case 0:
+        break;
+        default:
+        }
+    } while (button_stats != 0);
+    
+}
+
 void menu_principale()
 {
     int button_menu;
@@ -626,7 +670,7 @@ void menu_principale()
             achat_effec();
             break;
         case 5:
-            afficher_stat();
+            
             break;
         case 0:
             printf("\nMerci a vous cher client \nA bientot \n");
