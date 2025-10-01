@@ -201,8 +201,6 @@ void affichage_catalogue() {
         printf("Nom du produit : %s\n", prod[i].nom_produit);
         printf("Categorie : %s\n", prod[i].categorie);
         printf("le prix : %.2f\n", prod[i].prix);
-        printf("la quantite en stock : %d\n\n", prod[i].stock);
-        printf
     }
 }
 int recherche_par_nom() {
@@ -596,48 +594,86 @@ void depenses_par_categorie() {
     if (nbr_client == 0) return;
     
     printf("\n=== Depenses par Categorie ===\n");
-    int id_client = customer[nbr_client-1].id_client;
-    
+    typedef struct {
+        char categorie[MAX_SIZE];
+        float total;
+    } depense_categorie;
+
+    depense_categorie depenses[MAX_SIZE];
+    int nb_categories = 0;
     for (int i = 0; i < nbr_produits; i++) {
-        float total = 0;
-        for (int j = 0; j < nbr_produits; j++) {
-            if (prod[j] == id_client && prod[j] == prod[i]) {
-                total += historique[j].montant;
-            }
-        }
-        if (total > 0) {
-            printf("%s: %.2f DH\n", prod[i].categorie, total);
+    int categorie_existe = 0;
+        
+    for (int j = 0; j < nb_categories; j++) {
+        if (strcmp(depenses[j].categorie, prod[i].categorie) == 0) {
+            categorie_existe = 1;
+            break;
         }
     }
-}
-void statistiques(){
-    int button_stats;
-    do
-    {
-        printf("\n======= Statistiques =======\n\n");
-        printf("1. Gestion du profil client\n");
-        printf("2. Gestion du solde virtuel\n");
-        printf("3. Autres statistiques\n");
-        printf("0. Quitter\n");
-        printf("\n\nVeuillez saisir un choix :");
-        scanf("%d",&button_stats);
-
-        switch (button_stats)
-        {
-        case 1:
         
-        break;
-        case 2:
-        break;
-        case 3:
-        afficher_stat();
-        break;
-        case 0:
-        break;
-        default:
+        if (!categorie_existe) {
+            strcpy(depenses[nb_categories].categorie, prod[i].categorie);
+            depenses[nb_categories].total = 0.0;
+            nb_categories++;
+        }
+    }
+    
+    printf("fonctionalite en developpement\n");
+    printf("Catégories disponibles :\n");
+    for (int i = 0; i < nb_categories; i++) {
+        printf("- %s\n", depenses[i].categorie);
+    }
+
+    printf("\n Depenses simulees par categorie :\n");
+    for (int i = 0; i < nb_categories; i++) {
+        float depense_simulee = (rand() % 1000) + 100; 
+        printf("%s: %.2f DH\n", depenses[i].categorie, depense_simulee);
+    }
+}
+void statistiques() {
+    int button_stats;
+    do {
+        printf("\n======= Statistiques Avancées =======\n\n");
+        printf("1. Dépenses par catégorie\n");
+        printf("2. Produits les plus achetés\n");
+        printf("3. Statistiques des produits\n");
+        printf("4. Solde moyen des clients\n");
+        printf("0. Retour au menu principal\n");
+        printf("\nVeuillez saisir un choix : ");
+        scanf("%d", &button_stats);
+
+        switch (button_stats) {
+            case 1:
+                depenses_par_categorie();
+                break;
+            case 2:
+                printf("\n=== Produits les plus achetés ===\n");
+                printf("Fonctionnalité en développement...\n");
+                // Ici vous pouvez trier les produits par nombre d'achats
+                break;
+            case 3:
+                statistiques_prod(); // Utilise la fonction existante
+                break;
+            case 4:
+                printf("\n=== Solde moyen des clients ===\n");
+                if (nbr_client == 0) {
+                    printf("Aucun client enregistré.\n");
+                } else {
+                    float total_solde = 0;
+                    for (int i = 0; i < nbr_client; i++) {
+                        total_solde += customer[i].solde;
+                    }
+                    printf("Solde moyen: %.2f DH\n", total_solde / nbr_client);
+                    printf("Nombre total de clients: %d\n", nbr_client);
+                }
+                break;
+            case 0:
+                printf("Retour au menu principal...\n");
+                break;
+            default:
+                printf("Choix invalide! Veuillez saisir un choix entre 0 et 4.\n");
         }
     } while (button_stats != 0);
-    
 }
 
 void menu_principale()
