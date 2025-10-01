@@ -18,9 +18,9 @@ typedef struct
     int id_produit;
     char nom_produit[MAX_SIZE];
     char categorie[MAX_SIZE];
+    char description[MAX_SIZE];
     float prix;
     int stock;
-    char description[MAX_SIZE];
 } produit;
 
 typedef struct
@@ -34,16 +34,16 @@ typedef struct
 client customer[1];
 produit prod[MAX_SIZE] =
 {
-    {1,"casque","automotive",799.00,5},
-    {2,"Smartphone","electronics",499.00,10},
-    {3,"Parfum","beauty",89.00,15},
-    {4,"Echarpe DOSEI","fashion",25.00,20},
-    {5,"Cupcakes","food",45.00,12},
-    {6,"Yoga","sports",29.99,8},
-    {7,"Lamp","home",45.50,15},
-    {8,"Novelt","books",13.99,25},
-    {9,"Board","toys",49.95,12},
-    {10,"Watering","garden",19.75,30}
+    {1,"casque","automotive","Casque audio haute qualité",799.00,5},
+    {2,"Smartphone","electronics","Téléphone intelligent dernière génération",499.00,10},
+    {3,"Parfum","beauty","Fragrance élégante et persistante",89.00,15},
+    {4,"Echarpe DOSEI","fashion","Écharpe légère style parisien",25.00,20},
+    {5,"Cupcakes","food","Délicieux cupcakes faits maison",45.00,12},
+    {6,"Yoga","sports","Mat confortable pour yoga",29.99,8},
+    {7,"Lamp","home","Lumière douce pour ambiance",45.50,15},
+    {8,"Novelt","books","Roman passionnant best-seller",13.99,25},
+    {9,"Board","toys","Jeu de société familial",49.95,12},
+    {10,"Watering","garden","Arrosoir pratique jardin extérieur",19.75,30}
 };
 // Variables Globales
 int nbr_client = 0;
@@ -536,7 +536,105 @@ void afficher_stat()
         }
     } while (button_stat != 0);
 }
+void choisir_produit(){
+    printf("\n=========== Liste des produits ==========\n\n");
+    char nom_temp[nbr_produits];
+    for (int i = 0; i < nbr_produits; i++)
+    {
+        printf("Nom du produit : %s\n", prod[i].nom_produit);
+        printf("Categorie : %s\n", prod[i].categorie);
+        printf("le prix : %.2f DH\n", prod[i].prix);
+    }
+    printf("Veuillez saisir le nom du produit que vous voulez acheter : ");
+    scanf("%s", nom_temp);
 
+    int trouve = 0;
+    for (int i = 0; i < nbr_produits; i++)
+        {
+            if (strcmp(prod[i].nom_produit, nom_temp) == 0)
+            {
+                printf("\nProduit trouver\n\n");
+                printf("ID du produit : %d\n", prod[i].id_produit);
+                printf("nom du produit : %s\n", prod[i].nom_produit);
+                printf("category du produit  : %s\n", prod[i].categorie);
+                printf("Prix du produit : %.2f\n", prod[i].prix);
+                trouve = 1;
+                break;
+            }
+        }
+    if(trouve != 1){
+        printf("Produit n'est pas trouve \n");
+    }
+}
+void effectuer_paiement(){
+    printf("\n=========== paiement ==========\n\n");
+    
+    char nom_produit[nbr_produits];
+    int quantite;
+    float montant_total = 0;
+    
+    printf("Veuillez saisir le nom du produit a payer : ");
+    scanf("%s", nom_produit);
+    int index = -1;
+    for (int i = 0; i < nbr_produits; i++) {
+        if (strcmp(prod[i].nom_produit, nom_produit) == 0) {
+            index = i;
+            break;
+        }
+    }
+    if (index == -1) {
+        printf("produit n'est pas trouve\n");
+        return;
+    }
+    printf("quantite que tu souhaite : ");
+    scanf("%d", &quantite);
+    if (quantite > prod[index].stock) {
+        printf("stock n'est pas suffisant (stock est %d)\n", prod[index].stock);
+        return;
+    }
+    if (quantite <= 0) {
+        printf("Quantite invalide\n");
+        return;
+    }
+    montant_total = quantite*prod[index].prix;
+    printf("\nbillet de la commande \n");
+    printf("Produit : %s\n", prod[index].nom_produit);
+    printf("prix unitaire : %.2f DH\n", prod[index].prix);
+    printf("quantite : %d\n", quantite);
+    prod[index].stock -= quantite;
+    printf("Montant total : %.2f DH\n", montant_total);
+    customer[index].solde -= montant_total;
+
+    printf("\n\nPAiement effectue avec succes \n");
+}
+void achat_effec()
+{
+    int button_achat;
+    do
+    {
+        printf("\n======= Processus d'Achat =======\n\n");
+        printf("1. Choisir un produit \n");
+        printf("2. Effectuer le paiement \n");
+        printf("0. Quitter l'application\n\n");
+        printf("Veuillez saisir votre choix : ");
+        scanf("%d", &button_achat);
+
+        switch (button_achat)
+        {
+        case 1:
+            choisir_produit();
+            break;
+        case 2:
+            effectuer_paiement();
+            break;
+        case 0:
+            printf("\nMerci a vous cher client \nA bientot \n");
+            break;
+        default:
+            printf("Veuillez saisir un valide choix entre 0 et 2 : \n");
+        }
+    } while (button_achat != 0);
+}
 void menu_principale()
 {
     int button_menu;
@@ -564,7 +662,7 @@ void menu_principale()
             catalogue_prod();
             break;
         case 4:
-            effectuer_achat();
+            achat_effec();
             break;
         case 5:
             afficher_stat();
@@ -578,10 +676,8 @@ void menu_principale()
     } while (button_menu != 0);
 }
 
-int main(void)
-{
+int main(void) {
     int b1;
     menu_principale();
-
     return 0;
 }
