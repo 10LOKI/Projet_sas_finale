@@ -11,9 +11,9 @@ typedef struct
     char prenom[MAX_SIZE];
     char email[MAX_SIZE];
     float solde;
-}client;
+} client;
 
-typedef struct 
+typedef struct
 {
     int id_produit;
     char nom_produit[MAX_SIZE];
@@ -21,32 +21,31 @@ typedef struct
     float prix;
     int stock;
     char description[MAX_SIZE];
-}produit;
+} produit;
 
-typedef struct 
+typedef struct
 {
     int jour;
     int mois;
     int annee;
-}date;
+} date;
 
 // arrays
 client customer[1];
-produit prod[MAX_SIZE] = 
+produit prod[MAX_SIZE] =
 {
-    {1,"casque de moteur","automotive",799.00,5},
+    {1,"casque","automotive",799.00,5},
     {2,"Smartphone","electronics",499.00,10},
-    {3,"Parfum bleu de channel","beauty",89.00,15},
+    {3,"Parfum","beauty",89.00,15},
     {4,"Echarpe DOSEI","fashion",25.00,20},
     {5,"Cupcakes","food",45.00,12},
-    {6,"Yoga Mat","sports",29.99,8},
-    {7,"Desk Lamp","home",45.50,15},
-    {8,"Novel - The Silent Patient","books",13.99,25},
-    {9,"Board Game - Catan","toys",49.95,12},
-    {10,"Watering Can","garden",19.75,30}
-
+    {6,"Yoga","sports",29.99,8},
+    {7,"Lamp","home",45.50,15},
+    {8,"Novelt","books",13.99,25},
+    {9,"Board","toys",49.95,12},
+    {10,"Watering","garden",19.75,30}
 };
-// Variables Globales 
+// Variables Globales
 int nbr_client = 0;
 int nbr_produits = 10;
 // =====>  Le Menu et les sous menus
@@ -58,106 +57,68 @@ void creation_profile()
     printf("1 . Creer un profile \n");
     printf("0 . Retour au menu principale \n\n");
     printf("Veuillez saisir un choix  :  ");
-    scanf("%d",&b_creer);
+    scanf("%d", &b_creer);
 
     switch (b_creer)
     {
     case 1:
-    printf("Veuillez saisir votre nom :\n");
-    scanf("%s",customer[nbr_client].nom);
-    printf("Veuillez saisir votre prenom :\n");
-    scanf("%s",customer[nbr_client].prenom);
-    customer[nbr_client].id_client= nbr_client+66;
-    char temp_email[MAX_SIZE];
-    strcpy(temp_email,customer[nbr_client].prenom);
-    strcat(temp_email,customer[nbr_client].nom);
-    strcat(temp_email,"@gmail.com");
-    strcpy(customer[nbr_client].email,temp_email);
-    printf("votre adresse email est %s\n",customer[nbr_client].email);
-    printf("Votre ID est %d",customer[nbr_client].id_client);
-    nbr_client++;
-    break;
+        printf("Veuillez saisir votre nom :\n");
+        scanf("%s", customer[nbr_client].nom);
+        printf("Veuillez saisir votre prenom :\n");
+        scanf("%s", customer[nbr_client].prenom);
+        customer[nbr_client].id_client = nbr_client + 66;
+        char temp_email[MAX_SIZE];
+        strcpy(temp_email, customer[nbr_client].prenom);
+        strcat(temp_email, customer[nbr_client].nom);
+        strcat(temp_email, "@gmail.com");
+        strcpy(customer[nbr_client].email, temp_email);
+        printf("votre adresse email est %s\n", customer[nbr_client].email);
+        printf("Votre ID est %d", customer[nbr_client].id_client);
+        nbr_client++;
+        break;
     case 0:
-    printf("Retour au menu \n\n");
-    break;
+        printf("Retour au menu \n\n");
+        break;
     default:
-    printf("choix invalid il faut ressayer\n");
-    break;
+        printf("choix invalid il faut ressayer\n");
+        break;
     }
 }
-/*
-int recherche_client()
-{
-    int id_rech;
-    int trouve = 0;
-    int index_trouve = -1;
-    if (nbr_client == 0)
-    {
-        printf("y'a pas de client enregistre.\n");
-        return -1;
-    }
-    else
-    {
-        printf("Entrez l'ID du client : ");
-        scanf("%d",&id_rech);
-        for(int i=0;i<nbr_client;i++)
-        {
-            if(customer[i].id_client == id_rech)
-            {
-                printf("\nclient trouver\n\n");
-                printf("ID du client : %d\n", customer[i].id_client);
-                printf("nom : %s\n", customer[i].nom);
-                printf("prenom : %s\n", customer[i].prenom);
-                printf("email : %s\n", customer[i].email);
-                trouve = 1;
-                index_trouve = i;
-                break;
-            }
-        }
-        if(trouve!=1)
-        {
-            printf("ID non trouve\n");
-            return -1;
-        }
-    }
-    return index_trouve;
-}
-*/
 void modifier_profile()
 {
     printf("\n======= Modification du profile =======\n");
     // had stoura d recherche gha nkhelihoum hna ghi bach nchouf kifach n rechercher f les produits
     // apres gha n7eyedhoum
     printf("\n\nNouveau nom : ");
-    scanf("%s",customer[nbr_client].nom);
+    scanf("%s", customer[nbr_client].nom);
     printf("Nouveau prenom : ");
-    scanf("%s",customer[nbr_client].prenom);
+    scanf("%s", customer[nbr_client].prenom);
     char temp_email[MAX_SIZE];
-    strcpy(temp_email,customer[nbr_client].prenom);
-    strcat(temp_email,customer[nbr_client].nom);
-    strcat(temp_email,"@gmail.com");
-    strcpy(customer[nbr_client].email,temp_email);
-    printf("votre adresse email est %s\n",customer[nbr_client].email);
+    strcpy(temp_email, customer[nbr_client].prenom);
+    strcat(temp_email, customer[nbr_client].nom);
+    strcat(temp_email, "@gmail.com");
+    strcpy(customer[nbr_client].email, temp_email);
+    printf("votre adresse email est %s\n", customer[nbr_client].email);
     printf("Modification de profile a ete avec succes\n");
 }
 void consulte_profile()
 {
-    for(int i=0;i<nbr_client;i++)
+    for (int i = 0; i < nbr_client; i++)
     {
-    printf("\n\n========= Les information du client d'ID %d\n",customer[i].id_client);
-    printf("Prenom : %s\n",customer[i].prenom);
-    printf("Nom : %s\n",customer[i].nom);
-    printf("Email : %s\n",customer[i].email);
-    printf("solde : %.2f DH\n",customer[i].solde);
+        printf("\n\n========= Les information du client d'ID %d\n", customer[i].id_client);
+        printf("Prenom : %s\n", customer[i].prenom);
+        printf("Nom : %s\n", customer[i].nom);
+        printf("Email : %s\n", customer[i].email);
+        printf("solde : %.2f DH\n", customer[i].solde);
     }
 }
 void gestion_profile()
 {
     int button_gestion;
-    if(nbr_client == 0)
+    if (nbr_client == 0)
     {
         creation_profile();
-        if(nbr_client > 0) 
+        if (nbr_client > 0)
         {
             do
             {
@@ -166,52 +127,51 @@ void gestion_profile()
                 printf("2 . Consulter le profile \n");
                 printf("0 . Retour au menu principale\n");
                 printf("\nVeuillez saisir un choix : ");
-                scanf("%d",&button_gestion);
+                scanf("%d", &button_gestion);
 
-                switch(button_gestion)
+                switch (button_gestion)
                 {
-                    case 1:
+                case 1:
                     modifier_profile();
                     break;
-                    case 2:
+                case 2:
                     consulte_profile();
                     break;
-                    case 0:
+                case 0:
                     printf("Retour a menu principale \n");
                     break;
-                    default :
+                default:
                     printf("Veuillez saisir un choix valide\n");
                 }
-            } while(button_gestion != 0);
+            } while (button_gestion != 0);
         }
     }
-    else 
+    else
     {
-    do
+        do
         {
-        printf("======== La Gestion du Profil Client ========\n\n");
-        printf("\n1 . Modifier le profile \n");
-        printf("2 . Consulter le profile \n");
-        printf("0 . Retour au menu principale\n");
-        printf("\nVeuillez saisir un choix : ");
-        scanf("%d",&button_gestion);
+            printf("======== La Gestion du Profil Client ========\n\n");
+            printf("\n1 . Modifier le profile \n");
+            printf("2 . Consulter le profile \n");
+            printf("0 . Retour au menu principale\n");
+            printf("\nVeuillez saisir un choix : ");
+            scanf("%d", &button_gestion);
 
-        switch(button_gestion)
-        {
+            switch (button_gestion)
+            {
             case 1:
-            modifier_profile();
-            break;
+                modifier_profile();
+                break;
             case 2:
-            consulte_profile();
-            break;
+                consulte_profile();
+                break;
             case 0:
-            printf("Retour a menu principale \n");
-            break;
-            default :
-            printf("Veuillez saisir un choix valide\n");
-        }
-    }
-    while(button_gestion != 0);
+                printf("Retour a menu principale \n");
+                break;
+            default:
+                printf("Veuillez saisir un choix valide\n");
+            }
+        } while (button_gestion != 0);
     }
 }
 
@@ -219,67 +179,64 @@ void consult_solde()
 {
     printf("\n\n======= Consultation du Solde =======\n");
     printf("\n\n=======Solde Actuelle========\n");
-    printf("Client d'ID %d\n",customer[nbr_client].id_client);
+    printf("Client d'ID %d\n", customer[nbr_client].id_client);
     printf("Votre solde actuellle est :\n");
-    printf("===========> %.2f DH\n",customer[nbr_client].solde);
+    printf("===========> %.2f DH\n", customer[nbr_client].solde);
 }
 
 void depot_argent()
 {
-        float montant_temp;
-        printf("\n\n=======Depot d'argent ========\n");
-        printf("Veuillez saisir le montant que vous voulez deposer :\n");
-        scanf("%f",&montant_temp);
-        customer[nbr_client].solde += montant_temp;
-        printf("le depot a ete avec succes \n");
+    float montant_temp;
+    printf("\n\n=======Depot d'argent ========\n");
+    printf("Veuillez saisir le montant que vous voulez deposer :\n");
+    scanf("%f", &montant_temp);
+    customer[nbr_client].solde += montant_temp;
+    printf("le depot a ete avec succes \n");
 }
 void historique_trans()
 {
-
-
 }
 void gest_solde()
 {
-int button_solde;
-do
+    int button_solde;
+    do
     {
-    printf("\n========= La Gestion du Solde Virtuel =========\n\n");
-    printf("1 . Consulter votre solde \n");
-    printf("2 . Depot d'argent\n");
-    printf("3 . Historique des transactions \n");
-    printf("0 . Quitter ce Menu\n");
-    printf("\n\nVeuillez sasir un choix :\n");
-    scanf("%d",&button_solde);
+        printf("\n========= La Gestion du Solde Virtuel =========\n\n");
+        printf("1 . Consulter votre solde \n");
+        printf("2 . Depot d'argent\n");
+        printf("3 . Historique des transactions \n");
+        printf("0 . Quitter ce Menu\n");
+        printf("\n\nVeuillez sasir un choix :\n");
+        scanf("%d", &button_solde);
 
-    switch(button_solde)
-    {
-        case 1 :
-        consult_solde();
-        break;
+        switch (button_solde)
+        {
+        case 1:
+            consult_solde();
+            break;
         case 2:
-        depot_argent();
-        break;
+            depot_argent();
+            break;
         case 3:
-        historique_trans();
-        break;
+            historique_trans();
+            break;
         case 0:
-        break;
-        default :
-        printf("Veuillez saisir un valide choix\n");
-    }
-    }
-    while(button_solde != 0);
+            break;
+        default:
+            printf("Veuillez saisir un valide choix\n");
+        }
+    } while (button_solde != 0);
 }
 void affichage_catalogue()
 {
     printf("\n=========== Liste des produits ==========\n\n");
-    for(int i=0;i<nbr_produits;i++)
+    for (int i = 0; i < nbr_produits; i++)
     {
-        printf("produit N%d :\n\n",i+1);
-        printf("Nom du produit : %s\n",prod[i].nom_produit);
-        printf("Categorie : %s\n",prod[i].categorie);
-        printf("le prix : %.2f\n",prod[i].prix);
-        printf("la quantite en stock : %d\n\n",prod[i].stock);
+        printf("produit N%d :\n\n", i + 1);
+        printf("Nom du produit : %s\n", prod[i].nom_produit);
+        printf("Categorie : %s\n", prod[i].categorie);
+        printf("le prix : %.2f\n", prod[i].prix);
+        printf("la quantite en stock : %d\n\n", prod[i].stock);
     }
 }
 
@@ -295,23 +252,23 @@ int recherche_par_nom()
         return -1;
     }
     printf("Entrez le nom du produit : ");
-    scanf("%s",nom_temp);
+    scanf("%s", nom_temp);
 
-    for(int i=0;i<nbr_produits;i++)
+    for (int i = 0; i < nbr_produits; i++)
     {
-        if(strcmp(prod[i].nom_produit,nom_temp)==0)
+        if (strcmp(prod[i].nom_produit, nom_temp) == 0)
         {
             printf("\nProduit trouver\n\n");
             printf("ID du produit : %d\n", prod[i].id_produit);
             printf("nom du produit : %s\n", prod[i].nom_produit);
             printf("category du produit  : %s\n", prod[i].categorie);
-            printf("Prix du produit : %s\n", prod[i].prix);
+            printf("Prix du produit : %.2f\n", prod[i].prix);
             trouve = 1;
             index_trouve = i;
             break;
         }
     }
-    if(!trouve) 
+    if (!trouve)
     {
         printf("Nom non trouvé\n");
         return -1;
@@ -331,25 +288,25 @@ int recherche_par_categorie()
         return -1;
     }
     printf("Entrez la categorie du produit : ");
-    scanf("%s",categorie_temp);
+    scanf("%s", categorie_temp);
 
-    for(int i=0;i<nbr_produits;i++)
+    for (int i = 0; i < nbr_produits; i++)
     {
-        if(strcmp(prod[i].categorie,categorie_temp) == 0)
+        if (strcmp(prod[i].categorie, categorie_temp) == 0)
         {
             printf("\nProduit trouver\n\n");
             printf("ID du produit : %d\n", prod[i].id_produit);
             printf("nom du produit : %s\n", prod[i].nom_produit);
             printf("category du produit  : %s\n", prod[i].categorie);
-            printf("Prix du produit : %s\n", prod[i].prix);
+            printf("Prix du produit : %.2f\n", prod[i].prix);
             trouve = 1;
             index_trouve = i;
             break;
         }
     }
-    if(!trouve) 
+    if (!trouve)
     {
-        printf("Nom non trouvé\n");
+        printf("Categorie non trouvé\n");
         return -1;
     }
     return index_trouve;
@@ -365,24 +322,22 @@ void recherche_prod()
         printf("2 . Categorie\n");
         printf("0 . Quitter\n\n");
         printf("Vuillez choisir un choix : ");
-        scanf("%d",&choix);
-        switch(choix)
+        scanf("%d", &choix);
+        switch (choix)
         {
-        case 1 :
-        recherche_par_nom();
-        break;
-        case 2 :
-        recherche_par_categorie();
-        break;
-        case 0 :
-        printf("Retour au menu principale \n");
-        break;
-        default :
-        printf("Choix Invalide , veuillez saisir un choix valide \n");
-
+        case 1:
+            recherche_par_nom();
+            break;
+        case 2:
+            recherche_par_categorie();
+            break;
+        case 0:
+            printf("Retour au menu principale \n");
+            break;
+        default:
+            printf("Choix Invalide , veuillez saisir un choix valide \n");
         }
-    }
-    while(choix != 0);
+    } while (choix != 0);
 }
 void catalogue_prod()
 {
@@ -397,28 +352,28 @@ void catalogue_prod()
         printf("5 . Produits predefinies \n");
         printf("0 . Quitter ce Menu\n\n");
         printf("\n\nVeuillez sasir un choix :\n");
-        scanf("%d",&button_catalogue);
+        scanf("%d", &button_catalogue);
 
-        switch(button_catalogue)
+        switch (button_catalogue)
         {
-            case 1:
-            affichage_catalogue();
-            break;
-            case 2:
-            break;
-            case 3:
-            break;
-            case 4:
-            break;
-            case 5:
-            break;
-            case 0:
-            break;
-            default:
-            printf("Veuillez saisir un valide choix \n");
+        case 1:
+        affichage_catalogue();
+        break;
+        case 2:
+        recherche_prod();
+        break;
+        case 3:
+        break;
+        case 4:
+        break;
+        case 5:
+        break;
+        case 0:
+        break;
+        default:
+        printf("Veuillez saisir un valide choix \n");
         }
-    }
-    while(button_catalogue != 0);
+    } while (button_catalogue != 0);
 }
 
 void effectuer_achat()
@@ -434,27 +389,26 @@ void effectuer_achat()
         printf("5 . Historique des achats\n");
         printf("0 . Retour au menu principal\n\n");
         printf("\n\nVeuillez sasir un choix :\n");
-        scanf("%d",&button_achat);
+        scanf("%d", &button_achat);
 
-        switch(button_achat)
+        switch (button_achat)
         {
-            case 1:
+        case 1:
             break;
-            case 2:
+        case 2:
             break;
-            case 3:
+        case 3:
             break;
-            case 4:
+        case 4:
             break;
-            case 5:
+        case 5:
             break;
-            case 0:
+        case 0:
             break;
-            default:
+        default:
             printf("Veuillez sairi un valide choix \n");
         }
-    }
-    while(button_achat != 0);
+    } while (button_achat != 0);
 }
 
 void afficher_stat()
@@ -468,27 +422,26 @@ void afficher_stat()
         printf("3 . Produits les plus achetes\n");
         printf("0 . Retour au menu principal\n\n");
         printf("Votre choix: ");
-        scanf("%d",&button_stat);
+        scanf("%d", &button_stat);
 
-        switch(button_stat)
+        switch (button_stat)
         {
-            case 1:
+        case 1:
             break;
-            case 2:
+        case 2:
             break;
-            case 3:
+        case 3:
             break;
-            case 4:
+        case 4:
             break;
-            case 5:
+        case 5:
             break;
-            case 0:
+        case 0:
             break;
-            default:
+        default:
             printf("Veuillez sairi un valide choix \n");
         }
-    }
-    while(button_stat != 0);
+    } while (button_stat != 0);
 }
 
 void menu_principale()
@@ -504,33 +457,32 @@ void menu_principale()
         printf("5. Mes statistiques\n");
         printf("0. Quitter l'application\n\n");
         printf("Veuillez saisir votre choix : ");
-        scanf("%d",&button_menu);
+        scanf("%d", &button_menu);
 
-    switch (button_menu)
-    {
+        switch (button_menu)
+        {
         case 1:
-        gestion_profile();
-        break;
+            gestion_profile();
+            break;
         case 2:
-        gest_solde();
-        break;
+            gest_solde();
+            break;
         case 3:
-        catalogue_prod();
-        break;
+            catalogue_prod();
+            break;
         case 4:
-        effectuer_achat();
-        break;
+            effectuer_achat();
+            break;
         case 5:
-        afficher_stat();
-        break;
+            afficher_stat();
+            break;
         case 0:
-        printf("\nMerci a vous cher client \nA bientot \n");
-        break;
+            printf("\nMerci a vous cher client \nA bientot \n");
+            break;
         default:
-        printf("Veuillez saisir un valide choix entre 0 et 5 : \n");
+            printf("Veuillez saisir un valide choix entre 0 et 5 : \n");
         }
-    }
-    while(button_menu != 0);
+    } while (button_menu != 0);
 }
 
 int main(void)
