@@ -339,6 +339,99 @@ void recherche_prod()
         }
     } while (choix != 0);
 }
+void ordre_croissant()
+{
+for(int i=0;i<nbr_produits;i++)
+{
+    produit temp;
+    for(int j=0;j<nbr_produits-1;j++)
+    {
+        if(prod[j].prix > prod[j+1].prix)
+        {
+            temp = prod[j];
+            prod[j] = prod[j+1];
+            prod[j+1] = temp;
+        }
+    }
+}
+for(int i=0;i<nbr_produits;i++)
+{
+    printf("%s  : %.2f\n",prod[i].nom_produit,prod[i].prix);
+}
+}
+void ordre_decroissant()
+{
+for(int i=0;i<nbr_produits;i++)
+{ 
+    produit temp;
+    for(int j=0;j<nbr_produits-1;j++)
+    {
+        if(prod[j].prix<prod[j+1].prix)
+        {
+            temp = prod[j];
+            prod[j] = prod[j+1];
+            prod[j+1] = temp;
+        }
+    }
+}
+for(int i=0;i<nbr_produits;i++)
+{
+    printf("%s  : %.2f\n",prod[i].nom_produit,prod[i].prix);
+}
+}
+void ordre_alphabetique()
+{
+    produit temp;
+    for(int i = 0; i < nbr_produits - 1; i++) {
+        for(int j = 0; j < nbr_produits - i - 1; j++) {
+            if(strcmp(prod[j].nom_produit, prod[j+1].nom_produit) > 0) {
+                temp = prod[j];
+                prod[j] = prod[j+1];
+                prod[j+1] = temp;
+            }
+        }
+    }
+    for(int i=0;i<nbr_produits;i++)
+    {
+        printf("%s\n",prod[i].nom_produit);
+    }
+}
+void statistiques_prod()
+{
+    int choix;
+    do
+    {
+        printf("\nVoulez vous Trier en fonction de :\n");
+        printf("1 . ordre croissant\n");
+        printf("2 . ordre decroissant \n");
+        printf("3 . ordre alphabetique\n");
+        printf("0 . Quitter\n\n");
+        printf("Vuillez choisir un choix : ");
+        scanf("%d", &choix);
+        switch (choix)
+        {
+        case 1:
+        ordre_croissant();
+        break;
+        case 2:
+        ordre_decroissant();
+        break;
+        case 3 :
+        ordre_alphabetique();
+        break;
+        case 0:
+        printf("Retour au menu principale \n");
+        break;
+        default:
+        printf("Choix Invalide , veuillez saisir un choix valide \n");
+        }
+    } while (choix != 0);
+}
+void details_prod()
+{
+
+}
+
 void catalogue_prod()
 {
     int button_catalogue;
@@ -349,7 +442,6 @@ void catalogue_prod()
         printf("2 . Rechercher un produit \n");
         printf("3 . Afficher les statistique des produits \n"); // west hadi khassni ndir recherche par category w recherche par prix
         printf("4 . Details d'un produit \n");
-        printf("5 . Produits predefinies \n");
         printf("0 . Quitter ce Menu\n\n");
         printf("\n\nVeuillez sasir un choix :\n");
         scanf("%d", &button_catalogue);
@@ -363,12 +455,13 @@ void catalogue_prod()
         recherche_prod();
         break;
         case 3:
+        statistiques_prod();
         break;
         case 4:
-        break;
-        case 5:
+        recherche_par_nom();
         break;
         case 0:
+        printf("Retour au menu principale \n");
         break;
         default:
         printf("Veuillez saisir un valide choix \n");
@@ -386,7 +479,6 @@ void effectuer_achat()
         printf("2 . Voir le panier actuel\n");
         printf("3 . Vider le panier\n");
         printf("4 . Procéder au paiement\n");
-        printf("5 . Historique des achats\n");
         printf("0 . Retour au menu principal\n\n");
         printf("\n\nVeuillez sasir un choix :\n");
         scanf("%d", &button_achat);
@@ -417,7 +509,7 @@ void afficher_stat()
     do
     {
         printf("\n========= Mes statistiques =========\n\n");
-        printf("1 . Statistiques generales\n");
+        printf("1 . Statistiques des produits\n");
         printf("2 . Depenses par categorie\n");
         printf("3 . Produits les plus achetes\n");
         printf("0 . Retour au menu principal\n\n");
@@ -427,6 +519,7 @@ void afficher_stat()
         switch (button_stat)
         {
         case 1:
+        statistiques_prod();
             break;
         case 2:
             break;
