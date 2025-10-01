@@ -1,20 +1,21 @@
+// historique des transactions mazal madertha 
+// koul jouj products dirhoum f category we7da
+// ordre alphabetique makhedamch
+// deatail d lcatalogue zid fiha description w stock
+// mli kandir depot makatzad 7ta 7aja
+// khass nkemel despenses par categorie w les produits les plus achetes
 #include <stdio.h>
 #include <string.h>
-
 #define MAX_SIZE 100
-
 // structures
-typedef struct
-{
+typedef struct {
     int id_client;
     char nom[MAX_SIZE];
     char prenom[MAX_SIZE];
     char email[MAX_SIZE];
     float solde;
 } client;
-
-typedef struct
-{
+typedef struct {
     int id_produit;
     char nom_produit[MAX_SIZE];
     char categorie[MAX_SIZE];
@@ -22,18 +23,14 @@ typedef struct
     float prix;
     int stock;
 } produit;
-
-typedef struct
-{
+typedef struct {
     int jour;
     int mois;
     int annee;
 } date;
-
 // arrays
 client customer[1];
-produit prod[MAX_SIZE] =
-{
+produit prod[MAX_SIZE] = {
     {1,"casque","automotive","Casque audio haute qualité",799.00,5},
     {2,"Smartphone","electronics","Téléphone intelligent dernière génération",499.00,10},
     {3,"Parfum","beauty","Fragrance élégante et persistante",89.00,15},
@@ -49,8 +46,7 @@ produit prod[MAX_SIZE] =
 int nbr_client = 0;
 int nbr_produits = 10;
 // =====>  Le Menu et les sous menus
-void creation_profile()
-{
+void creation_profile() {
     printf("\n\nVeuillez s'inscrire dabord \n");
     int b_creer;
     printf("\n\n======= Creation du compte ======= \n\n");
@@ -58,7 +54,6 @@ void creation_profile()
     printf("0 . Retour au menu principale \n\n");
     printf("Veuillez saisir un choix  :  ");
     scanf("%d", &b_creer);
-
     switch (b_creer)
     {
     case 1:
@@ -84,44 +79,35 @@ void creation_profile()
         break;
     }
 }
-void modifier_profile()
-{
+void modifier_profile() {
     printf("\n======= Modification du profile =======\n");
-    // had stoura d recherche gha nkhelihoum hna ghi bach nchouf kifach n rechercher f les produits
-    // apres gha n7eyedhoum
     printf("\n\nNouveau nom : ");
-    scanf("%s", customer[nbr_client].nom);
+    scanf("%s",customer[nbr_client-1].nom);
     printf("Nouveau prenom : ");
-    scanf("%s", customer[nbr_client].prenom);
+    scanf("%s",customer[nbr_client-1].prenom);
     char temp_email[MAX_SIZE];
-    strcpy(temp_email, customer[nbr_client].prenom);
-    strcat(temp_email, customer[nbr_client].nom);
+    strcpy(temp_email, customer[nbr_client-1].prenom);
+    strcat(temp_email, customer[nbr_client-1].nom);
     strcat(temp_email, "@gmail.com");
-    strcpy(customer[nbr_client].email, temp_email);
-    printf("votre adresse email est %s\n", customer[nbr_client].email);
+    strcpy(customer[nbr_client-1].email,temp_email);
+    printf("votre adresse email est %s\n",customer[nbr_client-1].email);
     printf("Modification de profile a ete avec succes\n");
 }
-void consulte_profile()
-{
-    for (int i = 0; i < nbr_client; i++)
-    {
-        printf("\n\n========= Les information du client d'ID %d\n", customer[i].id_client);
+void consulte_profile() {
+    for (int i = 0; i < nbr_client; i++) {
+        printf("\n\n========= Les information du client d'ID %d\n", i+1);
         printf("Prenom : %s\n", customer[i].prenom);
         printf("Nom : %s\n", customer[i].nom);
         printf("Email : %s\n", customer[i].email);
         printf("solde : %.2f DH\n", customer[i].solde);
     }
 }
-void gestion_profile()
-{
+void gestion_profile() {
     int button_gestion;
-    if (nbr_client == 0)
-    {
+    if (nbr_client == 0) {
         creation_profile();
-        if (nbr_client > 0)
-        {
-            do
-            {
+        if (nbr_client > 0) {
+            do {
                 printf("\n\n======== La Gestion du Profil Client ========\n\n");
                 printf("1 . Modifier le profile \n");
                 printf("2 . Consulter le profile \n");
@@ -129,8 +115,7 @@ void gestion_profile()
                 printf("\nVeuillez saisir un choix : ");
                 scanf("%d", &button_gestion);
 
-                switch (button_gestion)
-                {
+                switch (button_gestion) {
                 case 1:
                     modifier_profile();
                     break;
@@ -146,10 +131,8 @@ void gestion_profile()
             } while (button_gestion != 0);
         }
     }
-    else
-    {
-        do
-        {
+    else {
+        do {
             printf("======== La Gestion du Profil Client ========\n\n");
             printf("\n1 . Modifier le profile \n");
             printf("2 . Consulter le profile \n");
@@ -157,8 +140,7 @@ void gestion_profile()
             printf("\nVeuillez saisir un choix : ");
             scanf("%d", &button_gestion);
 
-            switch (button_gestion)
-            {
+            switch (button_gestion) {
             case 1:
                 modifier_profile();
                 break;
@@ -175,8 +157,7 @@ void gestion_profile()
     }
 }
 
-void consult_solde()
-{
+void consult_solde() {
     printf("\n\n======= Consultation du Solde =======\n");
     printf("\n\n=======Solde Actuelle========\n");
     printf("Client d'ID %d\n", customer[nbr_client].id_client);
@@ -184,8 +165,7 @@ void consult_solde()
     printf("===========> %.2f DH\n", customer[nbr_client].solde);
 }
 
-void depot_argent()
-{
+void depot_argent() {
     float montant_temp;
     printf("\n\n=======Depot d'argent ========\n");
     printf("Veuillez saisir le montant que vous voulez deposer :\n");
@@ -193,14 +173,11 @@ void depot_argent()
     customer[nbr_client].solde += montant_temp;
     printf("le depot a ete avec succes \n");
 }
-void historique_trans()
-{
+void historique_trans() {
 }
-void gest_solde()
-{
+void gest_solde() {
     int button_solde;
-    do
-    {
+    do {
         printf("\n========= La Gestion du Solde Virtuel =========\n\n");
         printf("1 . Consulter votre solde \n");
         printf("2 . Depot d'argent\n");
@@ -209,8 +186,7 @@ void gest_solde()
         printf("\n\nVeuillez sasir un choix :\n");
         scanf("%d", &button_solde);
 
-        switch (button_solde)
-        {
+        switch (button_solde) {
         case 1:
             consult_solde();
             break;
@@ -227,11 +203,9 @@ void gest_solde()
         }
     } while (button_solde != 0);
 }
-void affichage_catalogue()
-{
+void affichage_catalogue() {
     printf("\n=========== Liste des produits ==========\n\n");
-    for (int i = 0; i < nbr_produits; i++)
-    {
+    for (int i = 0; i < nbr_produits; i++) {
         printf("produit N%d :\n\n", i + 1);
         printf("Nom du produit : %s\n", prod[i].nom_produit);
         printf("Categorie : %s\n", prod[i].categorie);
@@ -240,24 +214,20 @@ void affichage_catalogue()
     }
 }
 
-int recherche_par_nom()
-{
+int recherche_par_nom() {
     char nom_temp[MAX_SIZE];
     int trouve = 0;
     int index_trouve = -1;
 
-    if (nbr_produits == 0)
-    {
+    if (nbr_produits == 0) {
         printf("y'a pas de produit enregistre.\n");
         return -1;
     }
     printf("Entrez le nom du produit : ");
     scanf("%s", nom_temp);
 
-    for (int i = 0; i < nbr_produits; i++)
-    {
-        if (strcmp(prod[i].nom_produit, nom_temp) == 0)
-        {
+    for (int i = 0; i < nbr_produits; i++) {
+        if (strcmp(prod[i].nom_produit, nom_temp) == 0) {
             printf("\nProduit trouver\n\n");
             printf("ID du produit : %d\n", prod[i].id_produit);
             printf("nom du produit : %s\n", prod[i].nom_produit);
@@ -268,32 +238,27 @@ int recherche_par_nom()
             break;
         }
     }
-    if (!trouve)
-    {
+    if (!trouve) {
         printf("Nom non trouvé\n");
         return -1;
     }
     return index_trouve;
 }
 
-int recherche_par_categorie()
-{
+int recherche_par_categorie() {
     char categorie_temp[MAX_SIZE];
     int trouve = 0;
     int index_trouve = -1;
 
-    if (nbr_produits == 0)
-    {
+    if (nbr_produits == 0) {
         printf("y'a pas de produit enregistre.\n");
         return -1;
     }
     printf("Entrez la categorie du produit : ");
     scanf("%s", categorie_temp);
 
-    for (int i = 0; i < nbr_produits; i++)
-    {
-        if (strcmp(prod[i].categorie, categorie_temp) == 0)
-        {
+    for (int i = 0; i < nbr_produits; i++) {
+        if (strcmp(prod[i].categorie, categorie_temp) == 0) {
             printf("\nProduit trouver\n\n");
             printf("ID du produit : %d\n", prod[i].id_produit);
             printf("nom du produit : %s\n", prod[i].nom_produit);
@@ -304,27 +269,23 @@ int recherche_par_categorie()
             break;
         }
     }
-    if (!trouve)
-    {
+    if (!trouve) {
         printf("Categorie non trouvé\n");
         return -1;
     }
     return index_trouve;
 }
 
-void recherche_prod()
-{
+void recherche_prod() {
     int choix;
-    do
-    {
+    do {
         printf("\nVoulez vous rechercher en fonction :\n");
         printf("1 . Nom\n");
         printf("2 . Categorie\n");
         printf("0 . Quitter\n\n");
         printf("Vuillez choisir un choix : ");
         scanf("%d", &choix);
-        switch (choix)
-        {
+        switch (choix) {
         case 1:
             recherche_par_nom();
             break;
