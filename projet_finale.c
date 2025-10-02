@@ -22,16 +22,16 @@ typedef struct {
 // arrays
 client customer[1];
 produit prod[MAX_SIZE] = {
-    {1,"Casque","electronics","Casque audio haute qualité",799.00,5},
-    {2,"Smartphone","electronics","Téléphone intelligent dernière génération",499.00,10},
-    {3,"Parfum","beauty","Fragrance élégante et persistante",89.00,15},
-    {4,"Echarpe DOSEI","beauty","Écharpe légère style parisien",25.00,20},
-    {5,"Cupcakes","food","Délicieux cupcakes faits maison",45.00,12},
+    {1,"Casque","electronics","Casque audio haute qualite",799.00,5},
+    {2,"Smartphone","electronics","telephone intelligent derniere genere",499.00,10},
+    {3,"Parfum","beauty","Fragrance elegante et persistante",89.00,15},
+    {4,"Echarpe DOSEI","beauty","echape legere style parisien",25.00,20},
+    {5,"Cupcakes","food","delicieux cupcakes faits maison",45.00,12},
     {6,"Yoga","sports","Mat confortable pour yoga",29.99,8},
-    {7,"Lamp","home","Lumière douce pour ambiance",45.50,15},
+    {7,"Lamp","home","lumiere douce pour ambiance",45.50,15},
     {8,"Novelt","books","Roman passionnant best-seller",13.99,25},
-    {9,"Board","sports","Jeu de société familial",49.95,12},
-    {10,"Watering","garden","Arrosoir pratique jardin extérieur",19.75,30}
+    {9,"Board","sports","Jeu de societe familial",49.95,12},
+    {10,"Watering","garden","Arrosoir pratique jardin exterieur",19.75,30}
 };
 // Variables Globales
 int nbr_client = 0;
@@ -421,7 +421,7 @@ void catalogue_prod()
         }
     } while (button_catalogue != 0);
 }
-
+/*
 void effectuer_achat()
 {
     int button_achat;
@@ -455,6 +455,7 @@ void effectuer_achat()
         }
     } while (button_achat != 0);
 }
+    */
 
 void afficher_stat()
 {
@@ -558,7 +559,7 @@ void effectuer_paiement(){
     printf("quantite : %d\n", quantite);
     prod[index].stock -= quantite;
     printf("Montant total : %.2f DH\n", montant_total);
-    customer[index].solde -= montant_total;
+    customer[0].solde -= montant_total;
 
     printf("\n\nPAiement effectue avec succes \n");
 }
@@ -591,44 +592,7 @@ void achat_effec()
     } while (button_achat != 0);
 }
 void depenses_par_categorie() {
-    if (nbr_client == 0) return;
-    
-    printf("\n=== Depenses par Categorie ===\n");
-    typedef struct {
-        char categorie[MAX_SIZE];
-        float total;
-    } depense_categorie;
-
-    depense_categorie depenses[MAX_SIZE];
-    int nb_categories = 0;
-    for (int i = 0; i < nbr_produits; i++) {
-    int categorie_existe = 0;
-        
-    for (int j = 0; j < nb_categories; j++) {
-        if (strcmp(depenses[j].categorie, prod[i].categorie) == 0) {
-            categorie_existe = 1;
-            break;
-        }
-    }
-        
-        if (!categorie_existe) {
-            strcpy(depenses[nb_categories].categorie, prod[i].categorie);
-            depenses[nb_categories].total = 0.0;
-            nb_categories++;
-        }
-    }
-    
-    printf("fonctionalite en developpement\n");
-    printf("Catégories disponibles :\n");
-    for (int i = 0; i < nb_categories; i++) {
-        printf("- %s\n", depenses[i].categorie);
-    }
-
-    printf("\n Depenses simulees par categorie :\n");
-    for (int i = 0; i < nb_categories; i++) {
-        float depense_simulee = (rand() % 1000) + 100; 
-        printf("%s: %.2f DH\n", depenses[i].categorie, depense_simulee);
-    }
+   
 }
 void statistiques() {
     int button_stats;
